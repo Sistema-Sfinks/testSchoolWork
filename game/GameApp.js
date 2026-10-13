@@ -13,7 +13,7 @@ import { GUILabel } from '../engine/gui/GUILabel.js';
 // GUI 컴포넌트 및 게임 이벤트
 import { GUIButton } from '../engine/gui/GUIButton.js';
 import { MoveForwardEvent, MoveBackwardEvent, MoveLeftEvent, MoveRightEvent } from './events/MoveEvents.js';
-import { ToggleProjectionEvent } from './events/ToggleProjectionEvent.js';
+import { ToggleProjectionEvent } from './events/ToggleProjectionEvent.js'; 
 
 // 1. 엔진 코어 초기화 (index.html의 캔버스 ID 연결)
 const engine = new EngineCore('gameCanvas', {
