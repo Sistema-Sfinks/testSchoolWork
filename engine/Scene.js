@@ -2,10 +2,10 @@
 
 export class Scene {
     constructor() {
-        // 씬에 등록된 최상위 게임 객체들을 담는 배열 (Scene Graph의 루트 노드들)
         this.children = [];
-        // 이 씬을 렌더링할 메인 카메라 객체
         this.camera = null;
+        // 뷰포트(렌더링 영역)의 기본 배경색 (예: 어두운 회색)
+        this.backgroundColor = '#00ff00'; 
     }
 
     // 현재 씬의 메인 카메라 설정
