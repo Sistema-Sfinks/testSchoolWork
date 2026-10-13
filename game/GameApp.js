@@ -7,7 +7,7 @@ import { RotatingCube } from './objects/RotatingCube.js';
 
 // 1. 엔진 코어 초기화 (index.html의 캔버스 ID 연결)
 const engine = new EngineCore('gameCanvas', {
-    resolutionMode: 'fit'
+    resolutionMode: 'adaptive'
 });
 
 // 2. 씬(Scene) 생성
