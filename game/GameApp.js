@@ -19,13 +19,13 @@ const engine = new EngineCore('gameCanvas', {
     resolutionMode: 'adaptive',
     //resolutionMode: 'fit',
     //fixedWidth: 1920,
-    fixedWidth: 1980,
+    fixedWidth: 1920,
     fixedHeight: 1080
 });
 
 // 2. 씬(Scene) 생성
 const scene = new Scene();
-scene.backgroundColor = '#451c48'; // 뷰포트(캔버스) 배경색을 설정
+scene.backgroundColor = '#724826'; // 뷰포트(캔버스) 배경색을 설정
 
 // HTML 전체 화면(레터박스가 생기는 빈 공간)의 배경색은 CSS로 제어
 document.body.style.backgroundColor = '#000000';
