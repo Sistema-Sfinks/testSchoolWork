@@ -18,7 +18,7 @@ const engine = new EngineCore('gameCanvas', {
 
 // 2. 씬(Scene) 생성
 const scene = new Scene();
-scene.backgroundColor = '#b018cf'; // 뷰포트(캔버스) 배경을 짙은 네이비로 설정
+scene.backgroundColor = '#ff0000'; // 뷰포트(캔버스) 배경을 짙은 네이비로 설정
 
 // HTML 전체 화면(레터박스가 생기는 빈 공간)의 배경색은 CSS로 제어
 document.body.style.backgroundColor = '#000000';
