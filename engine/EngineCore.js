@@ -21,41 +21,36 @@ export class EngineCore {
     }
 
     resizeCanvas() {
-        // 1. 내부 렌더링 해상도(버퍼 크기) 설정
+        // 실제 화면의 논리적 픽셀 크기
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
         if (this.config.resolutionMode === 'adaptive') {
-            // 상시 적응: 기기의 실제 픽셀 비율(DPI)까지 고려하여 선명하게 렌더링
             const dpr = window.devicePixelRatio || 1;
-            this.canvas.width = window.innerWidth * dpr;
-            this.canvas.height = window.innerHeight * dpr;
+            // 캔버스 자체의 렌더링 해상도 (망막 디스플레이 대응)
+            this.canvas.width = w * dpr;
+            this.canvas.height = h * dpr;
         } else {
-            // 고정 해상도
             this.canvas.width = this.config.fixedWidth;
             this.canvas.height = this.config.fixedHeight;
         }
 
-        // 2. 화면 스케일링(CSS) 설정
-        this.applyScaleMode();
+        this.applyScaleMode(w, h);
     }
 
-    applyScaleMode() {
+    applyScaleMode(w, h) {
+        // vh/vw 대신 실제 계산된 픽셀값을 명시하여 브라우저의 강제 스트레칭 방지
+        this.canvas.style.width = w + 'px';
+        this.canvas.style.height = h + 'px';
+
         if (this.config.resolutionMode === 'adaptive') {
-            // 적응형일 경우 CSS는 무조건 화면 전체를 덮도록 설정
-            this.canvas.style.width = '100vw';
-            this.canvas.style.height = '100vh';
             this.canvas.style.objectFit = 'fill';
-            return;
-        }
-
-        // 고정 해상도일 때의 스케일링 처리
-        this.canvas.style.width = '100vw';
-        this.canvas.style.height = '100vh';
-
-        if (this.config.scaleMode === 'stretch') {
-            // 비율 무시하고 화면에 꽉 채움 (찌그러짐 발생 가능)
-            this.canvas.style.objectFit = 'fill';
-        } else if (this.config.scaleMode === 'fit') {
-            // 짧은 방향 기준으로 비율을 유지하며 최대 확대 (남는 공간은 레터박스 처리)
-            this.canvas.style.objectFit = 'contain';
+        } else {
+            if (this.config.scaleMode === 'stretch') {
+                this.canvas.style.objectFit = 'fill';
+            } else if (this.config.scaleMode === 'fit') {
+                this.canvas.style.objectFit = 'contain';
+            }
         }
     }
 

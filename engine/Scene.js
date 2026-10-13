@@ -35,7 +35,7 @@ export class Scene {
     }
 
     // 2단계: 렌더링 (EngineCore에서 매 프레임 호출됨)
-    render(ctx, canvasWidth, canvasHeight, aspectRatio) {
+    render(ctx, canvasWidth, canvasHeight) {
         // 카메라가 없으면 월드의 기준점이 없으므로 렌더링 중지
         if (!this.camera) {
             console.warn("Scene에 렌더링할 Camera가 설정되지 않았습니다.");
@@ -45,7 +45,7 @@ export class Scene {
         // 씬에 있는 모든 최상위 자식들에게 렌더링 명령 하달
         // 렌더링 파이프라인 연산에 필요한 카메라 객체와 뷰포트(캔버스 크기) 정보를 함께 넘겨줌
         for (const child of this.children) {
-            child.render(this.camera, ctx, canvasWidth, canvasHeight, aspectRatio);
+            child.render(this.camera, ctx, canvasWidth, canvasHeight);
         }
     }
 }

@@ -19,7 +19,7 @@ export class Camera extends GameObject {
     }
 
     // 월드 좌표계 정점을 뷰 변환 및 2D 투영을 거쳐 화면 픽셀 좌표계로 변환
-    project(worldPoint, canvasWidth, canvasHeight, aspectRatio = 1) {
+    project(worldPoint, canvasWidth, canvasHeight) { // aspectRatio 제거
         const viewPoint = worldPoint.subtract(this.position);
         const halfW = canvasWidth / 2;
         const halfH = canvasHeight / 2;
@@ -27,13 +27,13 @@ export class Camera extends GameObject {
         if (this.projectionMode === 'perspective') {
             if (viewPoint.z <= this.nearClip) return null;
 
-            // X축에 aspectRatio를 나누어주어 화면 비율에 따른 찌그러짐 보정
-            const x = ((viewPoint.x / viewPoint.z) * this.fovScale) / aspectRatio + halfW;
+            // X와 Y 모두 동일하게 fovScale만 곱합니다 (비율 나눗셈 제거)
+            const x = (viewPoint.x / viewPoint.z) * this.fovScale + halfW;
             const y = -(viewPoint.y / viewPoint.z) * this.fovScale + halfH;
             return { x, y };
         } else {
-            // 직교 투영도 동일하게 보정
-            const x = (viewPoint.x * this.orthoScale) / aspectRatio + halfW;
+            // 직교 투영도 동일
+            const x = viewPoint.x * this.orthoScale + halfW;
             const y = -viewPoint.y * this.orthoScale + halfH;
             return { x, y };
         }

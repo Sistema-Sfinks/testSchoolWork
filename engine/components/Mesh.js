@@ -10,16 +10,16 @@ export class Mesh extends GameObject {
         this.color = '#ffffff'; // 와이어프레임 색상
     }
 
-    render(camera, ctx, canvasWidth, canvasHeight, aspectRatio) {
+    render(camera, ctx, canvasWidth, canvasHeight) {
         if (this.vertices.length === 0 || this.edges.length === 0) {
-            super.render(camera, ctx, canvasWidth, canvasHeight, aspectRatio);
+            super.render(camera, ctx, canvasWidth, canvasHeight);
             return;
         }
 
         // 1. 로컬 정점을 월드 좌표계로 변환 후 카메라를 통해 2D 화면 좌표로 투영
         const projectedPoints = this.vertices.map(vertex => {
             const worldPoint = this.transformPoint(vertex);
-            return camera.project(worldPoint, canvasWidth, canvasHeight, aspectRatio);
+            return camera.project(worldPoint, canvasWidth, canvasHeight);
         });
 
         // 2. 2D 화면에 선(Edge) 그리기
@@ -40,6 +40,6 @@ export class Mesh extends GameObject {
         }
 
         // 자식 객체들 계층적 렌더링 호출
-        super.render(camera, ctx, canvasWidth, canvasHeight, aspectRatio);
+        super.render(camera, ctx, canvasWidth, canvasHeight);
     }
 }
