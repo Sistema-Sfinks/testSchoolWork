@@ -14,6 +14,9 @@ const engine = new EngineCore('gameCanvas', {
 const scene = new Scene();
 scene.backgroundColor = '#b018cf'; // 뷰포트(캔버스) 배경을 짙은 네이비로 설정
 
+// HTML 전체 화면(레터박스가 생기는 빈 공간)의 배경색은 CSS로 제어
+document.body.style.backgroundColor = '#000000';
+
 // 3. 카메라 생성 및 설정
 // 큐브가 원점(0,0,0)에 생성될 것이므로, 카메라는 Z축 뒤로(-30) 이동시켜 큐브를 바라보게 세팅
 const camera = new Camera(0, 0, -30);
