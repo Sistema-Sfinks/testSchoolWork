@@ -51,56 +51,40 @@ scene.update = function(deltaTime) {
     originalUpdate(deltaTime);
 };
 
-// ===================================================
-// 2. GUI 패널 및 WASD 이동 버튼 4개 배치
-// ===================================================
-
+// 화면 우측 하단 D-Pad 조종 패널 배치
 const dpadPanel = new GUIPanel({
     anchor: 'bottom-right',
     x: -30, y: -30,
     width: 220, height: 220,
-    backgroundColor: 'rgba(15, 23, 42, 0.7)',
+    backgroundColor: 'rgba(15, 23, 42, 0.75)',
     borderColor: '#00ffcc',
     borderRadius: 16
 });
 
-// W (전진 - Z축 +)
 const btnW = new GUIButton('전진', {
     anchor: 'top-center', x: 0, y: 15,
-    width: 80, height: 55,
-    hotkey: 'w',
-    boundEvent: new MoveForwardEvent(20),
-    targetObject: cube
+    width: 80, height: 55, hotkey: 'w',
+    boundEvent: new MoveForwardEvent(20), targetObject: cube
 });
 
-// A (좌회전/좌이동 - X축 -)
 const btnA = new GUIButton('좌', {
-    anchor: 'center-left', x: 15, y: 15,
-    width: 60, height: 55,
-    hotkey: 'a',
-    boundEvent: new MoveLeftEvent(20),
-    targetObject: cube
+    anchor: 'center-left', x: 15, y: 0,
+    width: 60, height: 55, hotkey: 'a',
+    boundEvent: new MoveLeftEvent(20), targetObject: cube
 });
 
-// S (후진 - Z축 -)
 const btnS = new GUIButton('후진', {
     anchor: 'bottom-center', x: 0, y: -15,
-    width: 80, height: 55,
-    hotkey: 's',
-    boundEvent: new MoveBackwardEvent(20),
-    targetObject: cube
+    width: 80, height: 55, hotkey: 's',
+    boundEvent: new MoveBackwardEvent(20), targetObject: cube
 });
 
-// D (우이동 - X축 +)
 const btnD = new GUIButton('우', {
-    anchor: 'center-right', x: -15, y: 15,
-    width: 60, height: 55,
-    hotkey: 'd',
-    boundEvent: new MoveRightEvent(20),
-    targetObject: cube
+    anchor: 'center-right', x: -15, y: 0,
+    width: 60, height: 55, hotkey: 'd',
+    boundEvent: new MoveRightEvent(20), targetObject: cube
 });
 
-// 버튼들을 패널 및 이벤트 매니저에 등록
 [btnW, btnA, btnS, btnD].forEach(btn => {
     dpadPanel.addChild(btn);
     eventManager.registerButton(btn);
