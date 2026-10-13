@@ -143,20 +143,3 @@ scene.addChild(infoLabel);
 // 5. 엔진에 씬을 등록하고 게임 루프 가동
 engine.setScene(scene);
 engine.start();
-
-// [테스트 기능] 화면 클릭 시 원근투영(Perspective) <-> 직교투영(Orthographic) 전환
-window.addEventListener('click', () => {
-    if (camera.projectionMode === 'perspective') {
-        camera.setProjectionMode('orthographic');
-        cube.color = '#ff3366'; // 직교 투영 모드일 때는 붉은색 와이어프레임
-        console.log("현재 모드: 직교 투영 (Orthographic)");
-        statusLabel.text = 'Mode: Orthographic';
-        statusLabel.color = '#ff3366';
-    } else {
-        camera.setProjectionMode('perspective');
-        cube.color = '#00ffcc'; // 원근 투영 모드일 때는 청록색 와이어프레임
-        console.log("현재 모드: 원근 투영 (Perspective)");
-        statusLabel.text = 'Mode: Perspective';
-        statusLabel.color = '#00ffcc';
-    }
-});
