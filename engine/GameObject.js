@@ -14,6 +14,10 @@ export class GameObject {
         this.children = [];
     }
 
+    getWorldPosition() {
+        return new Vector3(this.position.x, this.position.y, this.position.z);
+    }
+
     // 자식 객체 추가 (부모-자식 계층 생성)
     addChild(child) {
         child.parent = this;
