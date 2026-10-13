@@ -92,9 +92,13 @@ window.addEventListener('click', () => {
         camera.setProjectionMode('orthographic');
         cube.color = '#ff3366'; // 직교 투영 모드일 때는 붉은색 와이어프레임
         console.log("현재 모드: 직교 투영 (Orthographic)");
+        statusLabel.text = 'Mode: Orthographic';
+        statusLabel.color = '#ff3366';
     } else {
         camera.setProjectionMode('perspective');
         cube.color = '#00ffcc'; // 원근 투영 모드일 때는 청록색 와이어프레임
         console.log("현재 모드: 원근 투영 (Perspective)");
+        statusLabel.text = 'Mode: Perspective';
+        statusLabel.color = '#00ffcc';
     }
 });
