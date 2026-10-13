@@ -64,10 +64,10 @@ export class GameObject {
     }
 
     // 2단계: 렌더링 (Mesh 등 렌더링 가능한 파생 클래스에서 오버라이딩)
-    render(camera, ctx, canvasWidth, canvasHeight) {
+    render(camera, ctx, canvasWidth, canvasHeight, aspectRatio) {
         // 자식 객체들도 계층적으로 함께 렌더링
         for (const child of this.children) {
-            child.render(camera, ctx, canvasWidth, canvasHeight);
+            child.render(camera, ctx, canvasWidth, canvasHeight, aspectRatio);
         }
     }
 }
