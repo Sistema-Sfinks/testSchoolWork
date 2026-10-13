@@ -10,6 +10,11 @@ import { EventManager } from '../engine/events/EventManager.js';
 import { GUIPanel } from '../engine/gui/GUIPanel.js';
 import { GUILabel } from '../engine/gui/GUILabel.js';
 
+
+import { TexturedCube } from './objects/TexturedCube.js';
+import { Billboard } from '../engine/components/Billboard.js';
+
+
 // GUI 컴포넌트 및 게임 이벤트
 import { GUIButton } from '../engine/gui/GUIButton.js';
 import { MoveForwardEvent, MoveBackwardEvent, MoveLeftEvent, MoveRightEvent } from './events/MoveEvents.js';
@@ -38,9 +43,24 @@ camera.fovScale = 600;     // 원근 투영 시 화면에 그릴 스케일(초�
 camera.orthoScale = 15;    // 직교 투영 시 화면에 그릴 배수
 scene.setCamera(camera);
 
-// 4. 게임 객체 생성 및 씬 등록
-const cube = new RotatingCube(0, 0, 0, 10);
+// 1. 텍스처 이미지 로드
+const boxTexture = new Image();
+boxTexture.src = 'https://picsum.photos/256/256'; // 테스트용 텍스처 이미지
+
+const treeSprite = new Image();
+treeSprite.src = 'https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/25.png'; // 테스트용 빌보드 캐릭터 이미지
+
+// 2. 텍스처 3D 큐브 생성 (후면 선별 적용)
+const cube = new TexturedCube(0, 0, 0, 10, boxTexture);
 scene.addChild(cube);
+
+// 3. 3D 공간 상의 빌보드 나무/캐릭터 객체 배치
+const characterBillboard = new Billboard(8, -2, -5, {
+    image: treeSprite,
+    width: 8,
+    height: 8
+});
+scene.addChild(characterBillboard);
 
 // 1. 이벤트 매니저 생성 및 씬 업데이트에 바인딩
 const eventManager = new EventManager(engine.canvas);
@@ -52,9 +72,6 @@ scene.update = function(deltaTime) {
     originalUpdate(deltaTime);
 };
 
-/// ===================================================
-// 2. 우측 하단 D-Pad 조종 패널 (WASD)
-// ===================================================
 const dpadPanel = new GUIPanel({
     anchor: 'bottom-right',
     x: -30, y: -30,
@@ -64,29 +81,10 @@ const dpadPanel = new GUIPanel({
     borderRadius: 16
 });
 
-const btnW = new GUIButton('전진', {
-    anchor: 'top-center', x: 0, y: 15,
-    width: 80, height: 55, hotkey: 'w',
-    boundEvent: new MoveForwardEvent(20), targetObject: cube
-});
-
-const btnA = new GUIButton('좌', {
-    anchor: 'center-left', x: 15, y: 0,
-    width: 60, height: 55, hotkey: 'a',
-    boundEvent: new MoveLeftEvent(20), targetObject: cube
-});
-
-const btnS = new GUIButton('후진', {
-    anchor: 'bottom-center', x: 0, y: -15,
-    width: 80, height: 55, hotkey: 's',
-    boundEvent: new MoveBackwardEvent(20), targetObject: cube
-});
-
-const btnD = new GUIButton('우', {
-    anchor: 'center-right', x: -15, y: 0,
-    width: 60, height: 55, hotkey: 'd',
-    boundEvent: new MoveRightEvent(20), targetObject: cube
-});
+const btnW = new GUIButton('전진', { anchor: 'top-center', x: 0, y: 15, width: 80, height: 55, hotkey: 'w', boundEvent: new MoveForwardEvent(20), targetObject: cube });
+const btnA = new GUIButton('좌', { anchor: 'center-left', x: 15, y: 0, width: 60, height: 55, hotkey: 'a', boundEvent: new MoveLeftEvent(20), targetObject: cube });
+const btnS = new GUIButton('후진', { anchor: 'bottom-center', x: 0, y: -15, width: 80, height: 55, hotkey: 's', boundEvent: new MoveBackwardEvent(20), targetObject: cube });
+const btnD = new GUIButton('우', { anchor: 'center-right', x: -15, y: 0, width: 60, height: 55, hotkey: 'd', boundEvent: new MoveRightEvent(20), targetObject: cube });
 
 [btnW, btnA, btnS, btnD].forEach(btn => {
     dpadPanel.addChild(btn);
@@ -126,17 +124,6 @@ topHudPanel.addChild(statusLabel);
 topHudPanel.addChild(toggleBtn);
 eventManager.registerButton(toggleBtn);
 scene.addChild(topHudPanel);
-
-// 2. 화면 하단 중앙 반응형 안내 라벨 (앵커: bottom-center)
-const infoLabel = new GUILabel('Click anywhere to toggle Projection Mode', {
-    anchor: 'bottom-center',
-    x: 0, y: -40,
-    fontSize: 20,
-    color: '#f8efba',
-    align: 'center',
-    baseline: 'bottom'
-});
-scene.addChild(infoLabel);
 
 // ===================================================
 
