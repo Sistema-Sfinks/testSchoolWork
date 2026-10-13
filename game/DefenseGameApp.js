@@ -139,7 +139,7 @@ function spawnUnit(team) {
 }
 
 // ===================================================
-// GUI 시스템 및 스폰 버튼
+// GUI 시스템 및 스폰 버튼 (정공법 수정)
 // ===================================================
 const eventManager = new EventManager(engine.canvas);
 
@@ -152,14 +152,26 @@ const moneyLabel = new GUILabel('Cost: 0 $', { anchor: 'center', x: 0, y: 0, col
 hudPanel.addChild(moneyLabel);
 scene.addChild(hudPanel);
 
-// 하단 유닛 생산 버튼
+// 1. 명시적인 스폰 이벤트 클래스 정의
+class SpawnAllyEvent {
+    execute() {
+        // 돈이 부족하면 여기서 차단
+        if (state.money >= 50) {
+            spawnUnit(1);
+        }
+    }
+}
+
+// 2. 버튼 객체 생성 (익명 클래스 제거, 명시적 이벤트 바인딩)
 const spawnBtn = new GUIButton('보병 생산 (50$)', {
     anchor: 'bottom-center', x: 0, y: -30, width: 220, height: 60,
-    hotkey: 'space', triggerMode: 'click',
-    boundEvent: new class extends GameEvent {
-        execute() { spawnUnit(1); }
-    }()
+    hotkey: 'space' // 스페이스바 단축키 맵핑
 });
+
+// 3. 버튼에 이벤트 장착
+spawnBtn.boundEvent = new SpawnAllyEvent();
+
+// 4. 매니저와 씬에 등록
 eventManager.registerButton(spawnBtn);
 scene.addChild(spawnBtn);
 
