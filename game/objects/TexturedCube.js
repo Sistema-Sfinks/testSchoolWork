@@ -1,7 +1,7 @@
 // game/objects/TexturedCube.js
 
 import { Mesh } from '../../engine/components/Mesh.js';
-import { Math } from '../../engine/Math.js';
+import { Vector3 } from '../../engine/Math.js';
 
 export class TexturedCube extends Mesh {
     constructor(x = 0, y = 0, z = 0, size = 10, textureImage = null) {

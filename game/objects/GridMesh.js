@@ -1,7 +1,7 @@
 // game/objects/GridMesh.js
 
 import { Mesh } from '../../engine/components/Mesh.js';
-import { Math } from '../../engine/Math.js';
+import { Vector3 } from '../../engine/Math.js';
 
 export class GridMesh extends Mesh {
     constructor(size = 100, divisions = 20) {
