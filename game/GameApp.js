@@ -11,7 +11,8 @@ import { GUILabel } from '../engine/gui/GUILabel.js';
 
 // 1. 엔진 코어 초기화 (index.html의 캔버스 ID 연결)
 const engine = new EngineCore('gameCanvas', {
-    resolutionMode: 'adaptive',
+    //resolutionMode: 'adaptive',
+    resolutionMode: 'fit',
     //fixedWidth: 1920,
     fixedWidth: 1080,
     fixedHeight: 1080
@@ -19,7 +20,7 @@ const engine = new EngineCore('gameCanvas', {
 
 // 2. 씬(Scene) 생성
 const scene = new Scene();
-scene.backgroundColor = '#da1ce4'; // 뷰포트(캔버스) 배경을 짙은 네이비로 설정
+//scene.backgroundColor = '#da1ce4'; // 뷰포트(캔버스) 배경색을 설정
 
 // HTML 전체 화면(레터박스가 생기는 빈 공간)의 배경색은 CSS로 제어
 document.body.style.backgroundColor = '#000000';
