@@ -70,10 +70,17 @@ export class EngineCore {
     update(deltaTime) { if (this.activeScene) this.activeScene.update(deltaTime); }
 
     render() {
-        this.ctx.fillStyle = '#000000';
+        // 활성화된 씬이 있으면 씬의 배경색을, 없으면 기본 검은색을 사용
+        const bgColor = this.activeScene && this.activeScene.backgroundColor 
+            ? this.activeScene.backgroundColor 
+            : '#000000';
+
+        // 뷰포트(캔버스 버퍼) 영역만 해당 색으로 Clear
+        this.ctx.fillStyle = bgColor;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        // 종횡비(AspectRatio)를 카메라에 넘겨주기 위해 계산
-        const aspectRatio = this.canvas.width / this.canvas.height;
-        if (this.activeScene) this.activeScene.render(this.ctx, this.canvas.width, this.canvas.height, aspectRatio);
+
+        if (this.activeScene) {
+            this.activeScene.render(this.ctx, this.canvas.width, this.canvas.height);
+        }
     }
 }

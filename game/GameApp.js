@@ -12,6 +12,7 @@ const engine = new EngineCore('gameCanvas', {
 
 // 2. 씬(Scene) 생성
 const scene = new Scene();
+scene.backgroundColor = '#b018cf'; // 뷰포트(캔버스) 배경을 짙은 네이비로 설정
 
 // 3. 카메라 생성 및 설정
 // 큐브가 원점(0,0,0)에 생성될 것이므로, 카메라는 Z축 뒤로(-30) 이동시켜 큐브를 바라보게 세팅
