@@ -10,18 +10,20 @@ export class GUIButton extends GUIElement {
         this.boundEvent = options.boundEvent || null;
         this.targetObject = options.targetObject || null;
 
+        // 'hold' (지속 누름: 이동 등) | 'click' (단발성 클릭: 토글, 메뉴 등)
+        this.triggerMode = options.triggerMode || 'hold';
+        this.wasPressed = false;
+
         this.normalColor = options.normalColor || 'rgba(30, 41, 59, 0.85)';
         this.pressedColor = options.pressedColor || 'rgba(0, 255, 204, 0.6)';
         this.borderColor = options.borderColor || '#00ffcc';
         this.textColor = options.textColor || '#ffffff';
-        this.fontSize = options.fontSize || 20;
+        this.fontSize = options.fontSize || 18;
 
-        // 마우스 포인터 상태와 키보드 상태 분리
         this.isPointerDown = false;
         this.isHotkeyActive = false;
     }
 
-    // 포인터 또는 단축키 중 하나라도 눌려있으면 true 반환
     get isPressed() {
         return this.isPointerDown || this.isHotkeyActive;
     }
@@ -54,7 +56,7 @@ export class GUIButton extends GUIElement {
         ctx.fill();
         ctx.stroke();
 
-        const responsiveFontSize = Math.max(12, Math.round(this.fontSize * rect.scale));
+        const responsiveFontSize = Math.max(10, Math.round(this.fontSize * rect.scale));
         ctx.font = `bold ${responsiveFontSize}px Arial, sans-serif`;
         ctx.fillStyle = pressed ? '#000000' : this.textColor;
         ctx.textAlign = 'center';

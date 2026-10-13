@@ -51,7 +51,9 @@ scene.update = function(deltaTime) {
     originalUpdate(deltaTime);
 };
 
-// 화면 우측 하단 D-Pad 조종 패널 배치
+/// ===================================================
+// 2. 우측 하단 D-Pad 조종 패널 (WASD)
+// ===================================================
 const dpadPanel = new GUIPanel({
     anchor: 'bottom-right',
     x: -30, y: -30,
@@ -93,40 +95,35 @@ const btnD = new GUIButton('우', {
 scene.addChild(dpadPanel);
 
 // ===================================================
-
+// 1. 상단 HUD 및 투영 모드 전환 버튼 (앵커: top-left)
 // ===================================================
-// 2D 반응형 GUI 구성
-// ===================================================
-
-// 1. 좌측 상단 HUD 패널 (앵커: top-left)
 const topHudPanel = new GUIPanel({
     anchor: 'top-left',
     x: 20, y: 20,
-    width: 300, height: 80,
+    width: 280, height: 110,
     backgroundColor: 'rgba(15, 23, 42, 0.75)',
     borderColor: '#00ffcc',
     borderRadius: 12
 });
 
-// 패널 내부 타이틀 라벨 (부모 패널 기준 top-left)
-const titleLabel = new GUILabel('3D ENGINE HUD', {
-    anchor: 'top-left',
-    x: 15, y: 15,
-    fontSize: 22,
-    color: '#00ffcc'
-});
-
-// 패널 내부 상태 표시 라벨 (부모 패널 기준 bottom-left)
 const statusLabel = new GUILabel('Mode: Perspective', {
-    anchor: 'bottom-left',
-    x: 15, y: -15,
-    fontSize: 16,
-    color: '#ffffff',
-    baseline: 'bottom'
+    anchor: 'top-left', x: 15, y: 15,
+    fontSize: 16, color: '#00ffcc'
 });
 
-topHudPanel.addChild(titleLabel);
+// 단발성 클릭 버튼 생성 (단축키 P)
+const toggleBtn = new GUIButton('투영 전환', {
+    anchor: 'bottom-center', x: 0, y: -12,
+    width: 250, height: 45,
+    hotkey: 'p',
+    triggerMode: 'click', // 1회 클릭 트리거
+    boundEvent: new ToggleProjectionEvent(cube, statusLabel),
+    targetObject: camera
+});
+
 topHudPanel.addChild(statusLabel);
+topHudPanel.addChild(toggleBtn);
+eventManager.registerButton(toggleBtn);
 scene.addChild(topHudPanel);
 
 // 2. 화면 하단 중앙 반응형 안내 라벨 (앵커: bottom-center)

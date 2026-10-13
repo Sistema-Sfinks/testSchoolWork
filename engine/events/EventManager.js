@@ -65,15 +65,26 @@ export class EventManager {
 
     update(deltaTime) {
         for (const btn of this.guiButtons) {
-            // 1. 매 프레임 키보드 입력 동기화
             if (btn.hotkey) {
                 btn.isHotkeyActive = this.activeKeys.has(btn.hotkey);
             }
 
-            // 2. 버튼이 활성화(마우스 클릭 또는 WASD) 상태인 경우에만 이벤트 실행
-            if (btn.isPressed) {
-                btn.trigger(deltaTime);
+            const currentlyPressed = btn.isPressed;
+
+            if (btn.triggerMode === 'click') {
+                // 단발성 클릭: 이전에 안 눌렸다가 지금 눌린 순간에만 1회 실행
+                if (currentlyPressed && !btn.wasPressed) {
+                    btn.trigger(deltaTime);
+                }
+            } else {
+                // 지속 누름 (hold)
+                if (currentlyPressed) {
+                    btn.trigger(deltaTime);
+                }
             }
+
+            // 이전 프레임 상태 기록
+            btn.wasPressed = currentlyPressed;
         }
     }
 }
