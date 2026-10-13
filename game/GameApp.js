@@ -6,7 +6,9 @@ import { Camera } from '../engine/components/Camera.js';
 import { RotatingCube } from './objects/RotatingCube.js';
 
 // 1. 엔진 코어 초기화 (index.html의 캔버스 ID 연결)
-const engine = new EngineCore('gameCanvas');
+const engine = new EngineCore('gameCanvas', {
+    resolutionMode: 'adaptive'
+});
 
 // 2. 씬(Scene) 생성
 const scene = new Scene();
