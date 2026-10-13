@@ -5,9 +5,15 @@ import { Scene } from '../engine/Scene.js';
 import { Camera } from '../engine/components/Camera.js';
 import { RotatingCube } from './objects/RotatingCube.js';
 
+// GUI 모듈 불러오기
+import { GUIPanel } from '../engine/gui/GUIPanel.js';
+import { GUILabel } from '../engine/gui/GUILabel.js';
+
 // 1. 엔진 코어 초기화 (index.html의 캔버스 ID 연결)
 const engine = new EngineCore('gameCanvas', {
-    resolutionMode: 'adaptive'
+    resolutionMode: 'adaptive',
+    fixedWidth: 1920,
+    fixedHeight: 1080
 });
 
 // 2. 씬(Scene) 생성
@@ -27,6 +33,54 @@ scene.setCamera(camera);
 // 4. 게임 객체 생성 및 씬 등록
 const cube = new RotatingCube(0, 0, 0, 10);
 scene.addChild(cube);
+
+// ===================================================
+// 2D 반응형 GUI 구성
+// ===================================================
+
+// 1. 좌측 상단 HUD 패널 (앵커: top-left)
+const topHudPanel = new GUIPanel({
+    anchor: 'top-left',
+    x: 20, y: 20,
+    width: 300, height: 80,
+    backgroundColor: 'rgba(15, 23, 42, 0.75)',
+    borderColor: '#00ffcc',
+    borderRadius: 12
+});
+
+// 패널 내부 타이틀 라벨 (부모 패널 기준 top-left)
+const titleLabel = new GUILabel('3D ENGINE HUD', {
+    anchor: 'top-left',
+    x: 15, y: 15,
+    fontSize: 22,
+    color: '#00ffcc'
+});
+
+// 패널 내부 상태 표시 라벨 (부모 패널 기준 bottom-left)
+const statusLabel = new GUILabel('Mode: Perspective', {
+    anchor: 'bottom-left',
+    x: 15, y: -15,
+    fontSize: 16,
+    color: '#ffffff',
+    baseline: 'bottom'
+});
+
+topHudPanel.addChild(titleLabel);
+topHudPanel.addChild(statusLabel);
+scene.addChild(topHudPanel);
+
+// 2. 화면 하단 중앙 반응형 안내 라벨 (앵커: bottom-center)
+const infoLabel = new GUILabel('Click anywhere to toggle Projection Mode', {
+    anchor: 'bottom-center',
+    x: 0, y: -40,
+    fontSize: 20,
+    color: '#f8efba',
+    align: 'center',
+    baseline: 'bottom'
+});
+scene.addChild(infoLabel);
+
+// ===================================================
 
 // 5. 엔진에 씬을 등록하고 게임 루프 가동
 engine.setScene(scene);
