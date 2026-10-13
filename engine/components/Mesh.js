@@ -10,7 +10,7 @@ export class Mesh extends GameObject {
         this.color = '#ffffff'; // 와이어프레임 색상
     }
 
-    render(camera, ctx, canvasWidth, canvasHeight) {
+    render(camera, ctx, canvasWidth, canvasHeight, aspectRatio) {
         if (this.vertices.length === 0 || this.edges.length === 0) {
             super.render(camera, ctx, canvasWidth, canvasHeight);
             return;
@@ -40,6 +40,6 @@ export class Mesh extends GameObject {
         }
 
         // 자식 객체들 계층적 렌더링 호출
-        super.render(camera, ctx, canvasWidth, canvasHeight);
+        super.render(camera, ctx, canvasWidth, canvasHeight,aspectRatio);
     }
 }
