@@ -5,7 +5,7 @@ import { GridMesh } from './objects/GridMesh.js';
 import { TacticalSquad } from './objects/TacticalSquad.js';
 
 // 1. 엔진 및 씬 초기화
-const engine = new EngineCore();
+const engine = new EngineCore('gameCanvas', { resolutionMode: 'adaptive' });
 const scene = new Scene();
 
 // 2. 전술 카메라 세팅 (위에서 비스듬히 내려다보는 쿼터뷰)
