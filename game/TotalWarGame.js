@@ -1,6 +1,6 @@
 import { EngineCore } from '../engine/EngineCore.js';
 import { Scene } from '../engine/Scene.js';
-import { Camera } from '../engine/Camera.js';
+import { Camera } from '../engine/components/Camera.js';
 import { GridMesh } from './objects/GridMesh.js';
 import { TacticalSquad } from './objects/TacticalSquad.js';
 
